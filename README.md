@@ -1,6 +1,6 @@
 # Guide to Sample Generation in CMSSW
 
-We'll discuss the step-by-step process of generating samples for a given CMSSW Release for single particle gun simulations. 
+We'll discuss the step-by-step process of generating ntuple samples for a given CMSSW Release for single particle gun simulations. 
 
 ## Building a Release
 Connect to T3 Cluster
@@ -147,14 +147,36 @@ A machine readable formatted one ```cmdLog_v2.sh``` is above. This is basically 
 
 ## Running Generation Sequence 
 
-This part assumes you have cloned this repository and will make use of the files above. 
+This part assumes you have cloned this repository and will make use of the files above.\
+You can do this anywhere on the cluster as long as you have issued ```cmsenv``` in any of the releases.
 
 ```console
 user:~$ git clone https://github.com/fred144/sample-gen-guide-spd
 user:~$ cd sample-gen-guide-spd
 user:~$ ls 
+> SingleElectronE1000_cfi.py  cmdLog_v2.sh  logs  sample_gen.jdl  
 ```
 
+```sample_gen.jdl``` is a sample job submission file for the cluster with uses [condor](https://htcondor.readthedocs.io/en/latest/) to handle job distribution. 
+
+```bash
+universe = vanilla
+executable = ./cmdLog_v2.sh
+getenv = True
+should_transfer_files = NO
+Requirements = TARGET.FileSystemDomain == "privnet"
+Output =./logs/output_$(cluster)_$(process).stdout
+Error  =./logs/output_$(cluster)_$(process).stderr
+Log    =./logs/output_$(cluster)_$(process).log
+notify_user = fgarcia4@umd.edu # put you email here if you want to be notified
+notification = always
+# can request more cores, memory, etc. if allowed T3 is defaulted to 1 core
+# request_cpus = 2
+#request_memory = 4096
+#request_disk = 16383
+Arguments = 100
+Queue
+```
 
 
 
