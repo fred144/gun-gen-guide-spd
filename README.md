@@ -40,7 +40,7 @@ Let's checkout a workflow for sample generation.
 user@console:~$ cd src
 user@console:~$ runTheMatrix.py -w upgrade -l 34601.0 --dryRun
 ```
-34601.0 is the workflow number, which is linked to a detector geometry version (in this case, version 2026V76 which we can change). 
+34601.0 is the workflow number, which is linked to a detector geometry version (in this case, version 2026V76 which we can change if needed). 
 
 ```console
 user:~$ ls
@@ -67,14 +67,39 @@ Link below lists some available pre-configured guns, just copy them and edit the
 
 > https://github.com/cms-sw/cmssw/tree/master/Configuration/Generator/python 
 
+I have included an editted version of ```SingleElectronE1000_cfi.py```. Note, the name suggests that it's a 1 TeV (1000 GeV) Electron gun, but you can edit the parameters of the gun and change even the particle. It contents are below (note we have change the electron to a photon). 
 
-## Running Generation Sequence 
+***The name should be left as is, since we are going through the sample generation from scratch-- the default names are needed to be correctly referenced by CMSSW***
 
-This part assumes you have cloned this repository and will make use of the files above. 
+```python
+import FWCore.ParameterSet.Config as cms
 
-```console
-user:~$ git clone https://github.com/fred144/sample-gen-guide-spd
+pid = 22 # particle id of the particle;e.g., 22 for photon, 11 for electron, etc.
+energy = 1000 # the energy of the particles from the particle gun in GeV
+event_num = 10 # number of back to back events, helps set the name, rest is set in the cmdLog_v2
+# set the vertical bounds of the particle gun, default cms range is from [2.5, -2.5]
+# HGCAL bounds is [3.0, 1.5]
+eta_bottom = 3.0
+eta_top = 1.5
+
+generator = cms.EDProducer("FlatRandomEGunProducer",
+    PGunParameters = cms.PSet(
+        PartID = cms.vint32(pid),
+        MaxEta = cms.double(eta_bottom),
+        MaxPhi = cms.double(3.14159265359),
+        MinEta = cms.double(eta_top),
+        MinE = cms.double(energy - 0.01),
+        MinPhi = cms.double(-3.14159265359), ## in radians
+        MaxE = cms.double(energy + 0.01)
+    ),
+    Verbosity = cms.untracked.int32(0), ## set to 1 (or greater)  for printouts
+    psethack = cms.string('single_pid_{}_E_{}_nevts_{}'.format(int(pid), int(energy), int(event_num))),
+    AddAntiParticle = cms.bool(True),
+    firstRun = cms.untracked.uint32(1)
+)
 ```
+
+
 Brief note about the contents of the executable, nicely formatted it looks like this. 
 ```bash
 #!/bin/bash  
@@ -119,6 +144,17 @@ cmsDriver.py step3  \
 ```
 **Note, this won't work copy pasted since the line continuation characters are being funky**.
 A machine readable formatted one ```cmdLog_v2.sh``` is above. This is basically the same cmdLog_v2.sh but with some output names shortened. 
+
+## Running Generation Sequence 
+
+This part assumes you have cloned this repository and will make use of the files above. 
+
+```console
+user:~$ git clone https://github.com/fred144/sample-gen-guide-spd
+user:~$ cd sample-gen-guide-spd
+user:~$ ls 
+```
+
 
 
 
