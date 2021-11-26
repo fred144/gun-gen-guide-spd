@@ -177,11 +177,23 @@ notification = always
 Arguments = 100
 Queue
 ```
+To submit the job. 
+```console
+user:~$ condor_submit sample_gen.jdl 
+```
+To check you jobs.
+```console
+user:~$ condor_q
+```
+or go to this page (your job may be intially put on idle). 
+> http://hepcms-hn.umd.edu/condor_status.txt
+To cancel you job any time
+```console
+user:~$ condor_rm [job_id found using condor_q]
+```
+Can check the job logs. 
+```console
+user:~$ cd logs
+```
 
-
-
-
-
-
-
-
+## Ntuplizing
