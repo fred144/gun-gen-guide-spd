@@ -196,4 +196,19 @@ Can check the job logs.
 user:~$ cd logs
 ```
 
+If the job ran succesfully, you should have the following in your directory.
+```console
+user:~$ ls
+>
+logs                                    sample_gen.jdl 
+SingleElectronE1000_cfi.py              step2.root
+SingleElectronE1000_cfi_py_GEN_SIM.py   step2_DIGI_L1TrackTrigger_L1_DIGI2RAW_HLT.py 
+step3.log                               cmdLog_v2.sh                            
+step3.root                              step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PAT_VALIDATION_DQM.py
+step1.log                               step3_inDQM.root
+step1.root                              step3_inMINIAODSIM.root
+step2.log
+```
+```step3.root``` is the main sample file that we will turn into an ntuple. 
+
 ## Ntuplizing
