@@ -11,7 +11,7 @@ user:~$ fire[year]_[user]@hepcms-in2.umd.edu
 
 See available releases. 
 ```console
-user@console:~$ scram list -a 
+user:~$ scram list -a 
 ```
 
 Command above can take a while to parse through certain releases.\
@@ -37,8 +37,8 @@ user:~$ ls
 ```
 Let's checkout a workflow for sample generation. 
 ```console
-user@console:~$ cd src
-user@console:~$ runTheMatrix.py -w upgrade -l 34601.0 --dryRun
+user:~$ cd src
+user:~$ runTheMatrix.py -w upgrade -l 34601.0 --dryRun
 ```
 34601.0 is the workflow number, which is linked to a detector geometry version (in this case, version 2026V76 which we can change if needed). 
 
