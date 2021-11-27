@@ -151,7 +151,7 @@ This part assumes you have cloned this repository and will make use of the files
 You can do this anywhere on the cluster as long as you have issued ```cmsenv``` in any of the releases.
 
 ```console
-user:~$ git clone https://github.com/fred144/sample-gen-guide-spd
+user:~$ git clone https://github.com/fred144/gun-gen-guide-spd
 user:~$ cd sample-gen-guide-spd
 user:~$ ls 
 > SingleElectronE1000_cfi.py  cmdLog_v2.sh  logs  sample_gen.jdl  
