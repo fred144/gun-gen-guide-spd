@@ -277,5 +277,6 @@ CMSSW is a very dynamic software and is prone to breakage.
 There are also other tools that can do particle gun simulations. Like
 > https://github.com/chrispap95/particleGun
 
-If there are any questions, comments, and concerns feel free to reach out to me at ```fgarcia4@umd.edu```
+If there are any questions, comments, or concerns feel free to reach out to me at ```fgarcia4@umd.edu```
+
 *Fred Angelo Garcia, Simulating Particle Detection Group, Fall 2021*
