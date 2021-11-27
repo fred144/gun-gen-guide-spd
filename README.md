@@ -171,7 +171,7 @@ Log    =./logs/output_$(cluster)_$(process).log
 notify_user = fgarcia4@umd.edu # put you email here if you want to be notified
 notification = always
 # can request more cores, memory, etc. if allowed T3 is defaulted to 1 core
-# request_cpus = 2
+#request_cpus = 2
 #request_memory = 4096
 #request_disk = 16383
 Arguments = 100
@@ -212,3 +212,69 @@ step2.log
 ```step3.root``` is the main sample file that we will turn into an ntuple. 
 
 ## Ntuplizing
+Navigate to the CMSSW release's src folder and clone the ntuple generator tool then install 
+> https://github.com/chrispap95/reco-ntuples
+```console
+user:~$ cd CMSSW_x_x_x_pre1/src
+user:~$ cmsenv
+user:~$ git clone https://github.com/chrispap95/reco-ntuples
+user:~$ cd .. 
+user:~$ scram b -j4 #install 
+```
+
+The ```reco-ntuples``` tools should now be installed.
+
+>Note, if installation fails, try installing the tool in an earlier release of CMSSW (do the cmsrel etc.) and use that tool instead. 
+
+Go to
+```console
+user:~$ cd /reco-ntuples/HGCalAnalysis/test
+```
+
+```exampleConfig.py``` is a template to reconstuct your ```step3.root``` into an ntuple. 
+
+You can edit the following lines 
+```python
+...
+# change the geometry version to the version you generated the step3.root from.
+process.load('Configuration.Geometry.GeometryExtended2026D76Reco_cff') 
+...
+# change the sample size to the number contained in you step3.root.
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32([#sample size#]) )  
+...
+process.source = cms.Source("PoolSource",
+    # replace 'step3.root' with the source file you want to use
+    fileNames = cms.untracked.vstring(
+        'file:/full/path/to/your/step3.root'
+    ),
+    duplicateCheckMode = cms.untracked.string("noDuplicateCheck")
+)
+...
+process.TFileService = cms.Service(
+                       "TFileService", 
+                       fileName = cms.string("path/to/your/ntuple/folder/pid_[#]_e_[#energy#]_nevts_[#sample size#].root")
+                        )
+
+...
+```
+
+To run the ntuplization process, issue
+```console
+user:~$ nohup cmsRun exampleConfig.py > & log.txt & 
+```
+```nohup``` allows the script to run on the background and spits out the outputs/ errors to ```log.txt```
+
+If the ntuplization is succesful, you can very if the ntuple is filled by doing  
+```console
+user:~$ edmDumpEventContent #ntuplename#.root 
+```
+
+# Final Notes
+
+CMSSW is a very dynamic software and is prone to breakage.
+> If something doesn't work, try this process for older releases, e.g., ```CMSSW_11_3_0_pre5```. 
+There are also other tools that can do particle gun simulations. Like
+> https://github.com/chrispap95/particleGun
+
+
+
