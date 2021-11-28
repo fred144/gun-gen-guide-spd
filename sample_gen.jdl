@@ -9,11 +9,11 @@ Output =./logs/output_$(cluster)_$(process).stdout
 Error  =./logs/output_$(cluster)_$(process).stderr
 Log    =./logs/output_$(cluster)_$(process).log
 
-notify_user = fgarcia4@umd.edu # put you email here if you want to be notified
+notify_user = fgarcia4@umd.edu # put your email here if you want to be notified
 notification = always
 
 # can request more cores, memory, etc. if allowed
-request_cpus = 2
+#request_cpus = 2
 #request_memory = 4096
 #request_disk = 16383
 
