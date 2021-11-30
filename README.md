@@ -1,6 +1,8 @@
-# Guide to Sample Generation in CMSSW
+# Guide to Sample Generation in CMSSW for SPD
 
 We'll discuss the step-by-step process of generating ntuple samples for a given CMSSW Release for single particle gun simulations. 
+
+***Intended for use are the SPD Lab @UMD, private production.***
 
 ## Building a Release
 Connect to T3 Cluster
