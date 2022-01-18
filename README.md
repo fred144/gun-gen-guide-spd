@@ -265,7 +265,7 @@ user:~$ nohup cmsRun exampleConfig.py > & log.txt &
 ```
 ```nohup``` allows the script to run on the background and spits out the outputs/ errors to ```log.txt```
 
-If the ntuplization is succesful, you can very if the ntuple is filled by doing  
+If the ntuplization is succesful, you can verify if the ntuple is filled by doing  
 ```console
 user:~$ edmDumpEventContent #ntuplename#.root 
 ```
